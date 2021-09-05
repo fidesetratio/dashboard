@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -93,13 +94,7 @@ public class DataSourceConfigurer {
         // Set master and slave datasource as target datasource
         dynamicRoutingDataSource.setTargetDataSources(dataSourceMap);
 
-        // To put datasource keys into DataSourceContextHolder to judge if the datasource is exist
-        DynamicDataSourceContextHolder.dataSourceKeys.addAll(dataSourceMap.keySet());
-
-        // To put slave datasource keys into DataSourceContextHolder to load balance
-        DynamicDataSourceContextHolder.slaveDataSourceKeys.addAll(dataSourceMap.keySet());
-        DynamicDataSourceContextHolder.slaveDataSourceKeys.remove(DataSourceKey.master.name());
-        return dynamicRoutingDataSource;
+       return dynamicRoutingDataSource;
     }
 
     /** mybatis configuration **/
@@ -133,4 +128,11 @@ public class DataSourceConfigurer {
 	    return new SqlSessionTemplate(sqlSessionFactoryBean.getObject(),ExecutorType.BATCH);
 	  }
 
+	  
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dynamicDataSource());
+	}
+	  
+	  
 }

@@ -8,8 +8,8 @@ public class DynamicRoutingDataSource extends AbstractRoutingDataSource {
 	@Override
 	protected Object determineCurrentLookupKey() {
 		// TODO Auto-generated method stub
-		   logger.debug("Current DataSource is [{}]", DynamicDataSourceContextHolder.getDataSourceKey());
-	        return DynamicDataSourceContextHolder.getDataSourceKey();
+		   logger.debug("Current DataSource is [{}]", DynamicDataSourceContextHolder.getCurrentDb());
+	        return DynamicDataSourceContextHolder.getCurrentDb();
 	}
 
 }
