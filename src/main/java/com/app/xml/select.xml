@@ -3,4 +3,10 @@
 	<select id="getListDatasources" resultType="com.app.model.DatabaseDatasource">
        	select * from lst_datasources
     </select>
+    <select id="getQueryById" parameterType="Integer" resultType="com.app.model.DynamicQuery">
+	select a.queryId,a.queryString, b.datasource_name, a.flag_active, a.description ,a.created_date from lst_queries a
+	inner join lst_datasources b 
+	on a.datasource_id  = b.datasource_id 
+	where a.queryId = #{queryId, jdbcType=INTEGER} and a.flag_active = 1  
+</select>
 </mapper>

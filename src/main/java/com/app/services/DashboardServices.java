@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.mapper.DashboardDao;
 import com.app.model.DatabaseDatasource;
+import com.app.model.DynamicQuery;
 
 @Service
 public class DashboardServices {
@@ -17,6 +18,11 @@ public class DashboardServices {
 	public List<DatabaseDatasource> getListDatasources(){
 		DashboardDao dao=sqlSession.getMapper(DashboardDao.class);
 		return dao.getListDatasources();
+	}
+	
+	public DynamicQuery getQueryById(Integer queryId) {
+		DashboardDao dao=sqlSession.getMapper(DashboardDao.class);
+		return dao.getQueryById(queryId);
 	}
 
 }
